@@ -1,7 +1,6 @@
 [versions]
 #plugins
 dokka = '2.0.0'
-jacoco-to-cobertura = '2.0.0'
 kotlin = '2.3.10'
 kotlinCsv = '1.10.0'
 kover = '0.9.1'
@@ -71,10 +70,8 @@ temporal = [
 
 [plugins]
 dokka = { id = 'org.jetbrains.dokka', version.ref = 'dokka' }
-jacocoToCobertura = { id = 'net.razvan.jacoco-to-cobertura', version.ref = 'jacoco-to-cobertura' }
 kotest = { id = "io.kotest", version.ref = "kotest" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 versions = { id = "com.github.ben-manes.versions", version = "0.52.0" }
-changelog = { id = "org.jetbrains.changelog", version = "2.5.0" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 detekt = { id = "dev.detekt", version.ref = "detekt" }

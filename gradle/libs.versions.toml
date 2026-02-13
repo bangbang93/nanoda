@@ -1,0 +1,80 @@
+[versions]
+#plugins
+dokka = '2.0.0'
+jacoco-to-cobertura = '2.0.0'
+kotlin = '2.3.10'
+kotlinCsv = '1.10.0'
+kover = '0.9.1'
+ktfmt = "0.25.0"
+detekt = "2.0.0-alpha.2"
+
+#libs
+jackson = '2.19.0'
+jakarta-validation = '3.1.1'
+kotest = '6.1.2'
+kotlinLogging = '7.0.7'
+kotlinx-coroutines = '1.10.2'
+kotlinx-datetime = '0.6.2'
+protobuf = "4.30.0"
+slf4j = "2.0.7"
+spring-data-mongodb = "4.4.0"
+reactor-core = '3.8.0'
+mockk = '1.14.6'
+mongodb = '5.6.1'
+temporal = "1.31.0"
+
+[libraries]
+bson = { module = "org.mongodb:bson", version.ref = "mongodb" }
+jackson-datatype-jdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = 'jackson' }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = 'jackson' }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = 'jackson' }
+jackson-module-parameter-names = { module = "com.fasterxml.jackson.module:jackson-module-parameter-names", version.ref = 'jackson' }
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
+kotest-assertions-core = { module = 'io.kotest:kotest-assertions-core', version.ref = 'kotest' }
+kotest-framework-engine = { module = 'io.kotest:kotest-framework-engine', version.ref = 'kotest' }
+kotest-runner-junit5 = { module = 'io.kotest:kotest-runner-junit5', version.ref = 'kotest' }
+kotlinCsv = { module = "com.jsoizo:kotlin-csv", version.ref = "kotlinCsv" }
+kotlinLogging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlinLogging" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf" }
+slf4jSample = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+spring-data-mongodb = { module = "org.springframework.data:spring-data-mongodb", version.ref = "spring-data-mongodb" }
+reactor-core = { module = "io.projectreactor:reactor-core", version.ref = "reactor-core" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodb" }
+mongodb-driver-reactivestreams = { module = "org.mongodb:mongodb-driver-reactivestreams", version.ref = "mongodb" }
+temporal-sdk = { module = "io.temporal:temporal-sdk", version.ref = "temporal" }
+temporal-kotlin = { module = "io.temporal:temporal-kotlin", version.ref = "temporal" }
+
+[bundles]
+jackson-modules = [
+    "jackson-module-kotlin",
+    "jackson-module-parameter-names",
+    "jackson-datatype-jsr310",
+    "jackson-datatype-jdk8"
+]
+kotest = [
+    "kotest-assertions-core",
+    "kotest-framework-engine",
+    "kotest-runner-junit5"
+]
+kotlinx-coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-reactor",
+]
+temporal = [
+    "temporal-sdk",
+    "temporal-kotlin",
+]
+
+[plugins]
+dokka = { id = 'org.jetbrains.dokka', version.ref = 'dokka' }
+jacocoToCobertura = { id = 'net.razvan.jacoco-to-cobertura', version.ref = 'jacoco-to-cobertura' }
+kotest = { id = "io.kotest", version.ref = "kotest" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+versions = { id = "com.github.ben-manes.versions", version = "0.52.0" }
+changelog = { id = "org.jetbrains.changelog", version = "2.5.0" }
+ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }

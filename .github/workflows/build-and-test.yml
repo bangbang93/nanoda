@@ -1,0 +1,141 @@
+name: "Build and Test"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon -x test
+        working-directory: .
+
+      - name: Run tests with coverage
+        run: ./gradlew test koverXmlReport --no-daemon
+        working-directory: .
+
+      - name: Generate code quality reports
+        run: ./gradlew detekt ktfmtCheck --no-daemon
+        working-directory: .
+        continue-on-error: true
+
+      - name: Generate documentation
+        run: ./gradlew dokkaGenerate --no-daemon
+        working-directory: .
+        continue-on-error: true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: nanoda/build/test-results/test/
+          retention-days: 30
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: nanoda/build/reports/kover/
+          retention-days: 30
+
+      - name: Upload detekt reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: detekt-reports
+          path: nanoda/build/reports/detekt/
+          retention-days: 30
+
+      - name: Publish test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: nanoda/build/test-results/test/*.xml
+          check_name: Test Results
+          comment_title: Test Report
+
+      - name: Comment on PR with coverage
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'nanoda/build/reports/kover/index.html';
+            
+            if (fs.existsSync(path)) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '📊 **Coverage Report Generated**\n\nView the full coverage report in the uploaded artifacts.'
+              });
+            }
+
+      - name: Check Gradle wrapper
+        run: |
+          if [ ! -f "gradlew" ] || [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "❌ Gradle wrapper is missing!"
+            exit 1
+          fi
+          echo "✅ Gradle wrapper is present"
+
+  quality-gate:
+    name: Quality Gate
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check build status
+        if: needs.build.result == 'failure'
+        run: |
+          echo "❌ Build or tests failed"
+          exit 1
+
+      - name: Build passed
+        if: needs.build.result == 'success'
+        run: echo "✅ All checks passed"
+
+      - name: Build cancelled
+        if: needs.build.result == 'cancelled'
+        run: |
+          echo "⚠️ Build was cancelled"
+          exit 1
+

@@ -27,6 +27,11 @@ jobs:
           java-version: "21"
           distribution: "temurin"
           cache: gradle
+          server-id: central
+          server-username: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
+          server-password: ${{ secrets.JRELEASER_MAVENCENTRAL_PASSWORD }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build release
         run: ./gradlew clean build -x test
@@ -39,6 +44,12 @@ jobs:
 
       - name: Publish to Maven Central
         run: ./gradlew jreleaserFullRelease
+        env:
+          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
+          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.JRELEASER_MAVENCENTRAL_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

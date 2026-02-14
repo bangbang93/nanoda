@@ -15,6 +15,10 @@ plugins {
   `maven-publish`
 }
 
+group = "com.bangbang93.nanoda"
+
+version = "0.0.2"
+
 dependencies {
   // 核心库
   implementation(kotlin("stdlib"))
@@ -57,13 +61,7 @@ dependencies {
 
 repositories { mavenCentral() }
 
-group = "com.bangbang93.nanoda"
-
-version = "0.0.1"
-
 tasks.withType<Test>().configureEach { useJUnitPlatform() }
-
-tasks.test { useJUnitPlatform() }
 
 java {
   sourceCompatibility = JavaVersion.VERSION_21

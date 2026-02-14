@@ -5,24 +5,24 @@ package com.bangbang93.nanoda.exception
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-/** 确保值不为 null，否则抛出 [ChipcooException.MissingArgumentChipcooException] */
+/** 确保值不为 null，否则抛出 [ServiceException.MissingArgumentServiceException] */
 inline fun ensureNotNull(
     value: Any?,
     lazyMessage: () -> String,
 ) {
   contract { returns() implies (value != null) }
   if (value == null) {
-    throw ChipcooException.MissingArgumentChipcooException(lazyMessage())
+    throw ServiceException.MissingArgumentServiceException(lazyMessage())
   }
 }
 
-/** 确保值为 true，否则抛出 [ChipcooException.InvalidArgumentChipcooException] */
+/** 确保值为 true，否则抛出 [ServiceException.InvalidArgumentServiceException] */
 inline fun ensure(
     value: Boolean,
     lazyMessage: () -> String,
 ) {
   contract { returns() implies value }
   if (!value) {
-    throw ChipcooException.InvalidArgumentChipcooException(lazyMessage())
+    throw ServiceException.InvalidArgumentServiceException(lazyMessage())
   }
 }

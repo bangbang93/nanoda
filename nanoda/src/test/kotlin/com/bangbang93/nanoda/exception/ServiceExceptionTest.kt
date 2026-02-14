@@ -4,19 +4,19 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-class ChipcooExceptionTest :
+class ServiceExceptionTest :
     DescribeSpec({
-      describe("UnknownChipcooException") {
+      describe("UnknownServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.UnknownChipcooException("Unknown error occurred")
+          val exception = ServiceException.UnknownServiceException("Unknown error occurred")
 
           // Assert
           exception.message shouldBe "Unknown error occurred"
           exception.code shouldBe "COMMON_UNKNOWN"
           exception.httpCode shouldBe 500
           exception.data shouldBe null
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
 
         it("创建异常时携带数据") {
@@ -24,115 +24,115 @@ class ChipcooExceptionTest :
           val data: Map<Any, Any> = mapOf("key" to "value")
 
           // Act
-          val exception = ChipcooException.UnknownChipcooException("Error with data", data = data)
+          val exception = ServiceException.UnknownServiceException("Error with data", data = data)
 
           // Assert
           exception.data shouldBe data
         }
       }
 
-      describe("NeedLoginChipcooException") {
+      describe("NeedLoginServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.NeedLoginChipcooException("Login required")
+          val exception = ServiceException.NeedLoginServiceException("Login required")
 
           // Assert
           exception.message shouldBe "Login required"
           exception.code shouldBe "COMMON_NEED_LOGIN"
           exception.httpCode shouldBe 401
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
       describe("WrongOrganizationException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.WrongOrganizationChipcooException("Wrong organization")
+          val exception = ServiceException.WrongOrganizationServiceException("Wrong organization")
 
           // Assert
           exception.message shouldBe "Wrong organization"
           exception.code shouldBe "COMMON_WRONG_ORGANIZATION"
           exception.httpCode shouldBe 400
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
-      describe("NotFoundChipcooException") {
+      describe("NotFoundServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.NotFoundChipcooException("Resource not found")
+          val exception = ServiceException.NotFoundServiceException("Resource not found")
 
           // Assert
           exception.message shouldBe "Resource not found"
           exception.code shouldBe "COMMON_NOT_FOUND"
           exception.httpCode shouldBe 404
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
-      describe("PermissionDeniedChipcooException") {
+      describe("PermissionDeniedServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.PermissionDeniedChipcooException("Permission denied")
+          val exception = ServiceException.PermissionDeniedServiceException("Permission denied")
 
           // Assert
           exception.message shouldBe "Permission denied"
           exception.code shouldBe "COMMON_PERMISSION_DENIED"
           exception.httpCode shouldBe 403
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
-      describe("MissingArgumentChipcooException") {
+      describe("MissingArgumentServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.MissingArgumentChipcooException("Argument missing")
+          val exception = ServiceException.MissingArgumentServiceException("Argument missing")
 
           // Assert
           exception.message shouldBe "Argument missing"
           exception.code shouldBe "COMMON_MISSING_ARGUMENT"
           exception.httpCode shouldBe 400
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
-      describe("InvalidArgumentChipcooException") {
+      describe("InvalidArgumentServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
-          val exception = ChipcooException.InvalidArgumentChipcooException("Invalid argument")
+          val exception = ServiceException.InvalidArgumentServiceException("Invalid argument")
 
           // Assert
           exception.message shouldBe "Invalid argument"
           exception.code shouldBe "COMMON_INVALID_ARGUMENT"
           exception.httpCode shouldBe 400
-          exception.isChipcooError shouldBe true
+          exception.`$isServiceError` shouldBe true
         }
       }
 
-      describe("ChipcooException继承关系") {
-        it("所有异常都是ChipcooException的子类") {
+      describe("ServiceException继承关系") {
+        it("所有异常都是ServiceException的子类") {
           // Arrange & Act
           val exceptions =
               listOf(
-                  ChipcooException.UnknownChipcooException("test"),
-                  ChipcooException.NeedLoginChipcooException("test"),
-                  ChipcooException.WrongOrganizationChipcooException("test"),
-                  ChipcooException.NotFoundChipcooException("test"),
-                  ChipcooException.PermissionDeniedChipcooException("test"),
-                  ChipcooException.MissingArgumentChipcooException("test"),
-                  ChipcooException.InvalidArgumentChipcooException("test"),
+                  ServiceException.UnknownServiceException("test"),
+                  ServiceException.NeedLoginServiceException("test"),
+                  ServiceException.WrongOrganizationServiceException("test"),
+                  ServiceException.NotFoundServiceException("test"),
+                  ServiceException.PermissionDeniedServiceException("test"),
+                  ServiceException.MissingArgumentServiceException("test"),
+                  ServiceException.InvalidArgumentServiceException("test"),
               )
 
           // Assert
           exceptions.forEach { exception ->
-            exception.shouldBeInstanceOf<ChipcooException>()
-            exception.isChipcooError shouldBe true
+            exception.shouldBeInstanceOf<ServiceException>()
+            exception.`$isServiceError` shouldBe true
           }
         }
 
         it("所有异常都是Exception的子类") {
           // Arrange & Act
-          val exception = ChipcooException.UnknownChipcooException("test")
+          val exception = ServiceException.UnknownServiceException("test")
 
           // Assert
           exception.shouldBeInstanceOf<Exception>()
@@ -146,7 +146,7 @@ class ChipcooExceptionTest :
 
           // Act
           val exception =
-              ChipcooException.UnknownChipcooException(
+              ServiceException.UnknownServiceException(
                   "Wrapped error",
                   cause = originalException,
               )
@@ -168,7 +168,7 @@ class ChipcooExceptionTest :
 
           // Act
           val exception =
-              ChipcooException.PermissionDeniedChipcooException(
+              ServiceException.PermissionDeniedServiceException(
                   "Cannot delete file",
                   data = data,
               )
@@ -181,7 +181,7 @@ class ChipcooExceptionTest :
 
         it("data可以为空") {
           // Arrange & Act
-          val exception = ChipcooException.NotFoundChipcooException("Not found", data = null)
+          val exception = ServiceException.NotFoundServiceException("Not found", data = null)
 
           // Assert
           exception.data shouldBe null

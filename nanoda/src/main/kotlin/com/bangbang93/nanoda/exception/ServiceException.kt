@@ -1,7 +1,7 @@
 package com.bangbang93.nanoda.exception
 
 @Suppress("MagicNumber")
-open class ChipcooException(
+open class ServiceException(
     message: String,
     val code: String,
     val httpCode: Int,
@@ -14,8 +14,8 @@ open class ChipcooException(
         definition: ExceptionDefinition,
         data: Map<Any, Any>? = null,
         cause: Throwable? = null,
-    ): ChipcooException =
-        ChipcooException(
+    ): ServiceException =
+        ServiceException(
             message = definition.message,
             code = definition.code,
             httpCode = definition.httpCode,
@@ -24,54 +24,54 @@ open class ChipcooException(
         )
   }
 
-  val isChipcooError = true
+  @Suppress("VariableNaming") val `$isServiceError` = true
 
   /** 未知错误 */
-  class UnknownChipcooException(
+  class UnknownServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_UNKNOWN", 500, data)
+  ) : ServiceException(message, "COMMON_UNKNOWN", 500, data)
 
   /** 需要登录 */
-  class NeedLoginChipcooException(
+  class NeedLoginServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_NEED_LOGIN", 401, data)
+  ) : ServiceException(message, "COMMON_NEED_LOGIN", 401, data)
 
   /** 组织错误 */
-  class WrongOrganizationChipcooException(
+  class WrongOrganizationServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_WRONG_ORGANIZATION", 400, data)
+  ) : ServiceException(message, "COMMON_WRONG_ORGANIZATION", 400, data)
 
   /** 找不到对象 */
-  class NotFoundChipcooException(
+  class NotFoundServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_NOT_FOUND", 404, data)
+  ) : ServiceException(message, "COMMON_NOT_FOUND", 404, data)
 
   /** 权限不足 */
-  class PermissionDeniedChipcooException(
+  class PermissionDeniedServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_PERMISSION_DENIED", 403, data)
+  ) : ServiceException(message, "COMMON_PERMISSION_DENIED", 403, data)
 
   /** 参数缺失 */
-  class MissingArgumentChipcooException(
+  class MissingArgumentServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_MISSING_ARGUMENT", 400, data)
+  ) : ServiceException(message, "COMMON_MISSING_ARGUMENT", 400, data)
 
   /** 参数无效 */
-  class InvalidArgumentChipcooException(
+  class InvalidArgumentServiceException(
       message: String,
       cause: Throwable? = null,
       data: Map<Any, Any>? = null,
-  ) : ChipcooException(message, "COMMON_INVALID_ARGUMENT", 400, data)
+  ) : ServiceException(message, "COMMON_INVALID_ARGUMENT", 400, data)
 }

@@ -15,13 +15,13 @@ class EnsureTest :
           ensureNotNull(value) { "Value should not be null" }
         }
 
-        it("空值时抛出MissingArgumentChipcooException") {
+        it("空值时抛出MissingArgumentServiceException") {
           // Arrange
           val value: String? = null
 
           // Act & Assert
           val exception =
-              shouldThrow<ChipcooException.MissingArgumentChipcooException> {
+              shouldThrow<ServiceException.MissingArgumentServiceException> {
                 ensureNotNull(value) { "Value is required" }
               }
           exception.message shouldBe "Value is required"
@@ -61,13 +61,13 @@ class EnsureTest :
           ensure(condition) { "Condition must be true" }
         }
 
-        it("条件为false时抛出InvalidArgumentChipcooException") {
+        it("条件为false时抛出InvalidArgumentServiceException") {
           // Arrange
           val condition = false
 
           // Act & Assert
           val exception =
-              shouldThrow<ChipcooException.InvalidArgumentChipcooException> {
+              shouldThrow<ServiceException.InvalidArgumentServiceException> {
                 ensure(condition) { "Invalid condition" }
               }
           exception.message shouldBe "Invalid condition"
@@ -81,13 +81,13 @@ class EnsureTest :
           ensure(value > 5) { "Value must be greater than 5" }
         }
 
-        it("表达式结果为false时抛出InvalidArgumentChipcooException") {
+        it("表达式结果为false时抛出InvalidArgumentServiceException") {
           // Arrange
           val value = 3
 
           // Act & Assert
           val exception =
-              shouldThrow<ChipcooException.InvalidArgumentChipcooException> {
+              shouldThrow<ServiceException.InvalidArgumentServiceException> {
                 ensure(value > 5) { "Value must be greater than 5" }
               }
           exception.message shouldBe "Value must be greater than 5"
@@ -102,14 +102,14 @@ class EnsureTest :
           ensure(name.isNotEmpty() && age >= 18) { "Invalid person data" }
         }
 
-        it("复杂条件为false时抛出InvalidArgumentChipcooException") {
+        it("复杂条件为false时抛出InvalidArgumentServiceException") {
           // Arrange
           val name = "John"
           val age = 15
 
           // Act & Assert
           val exception =
-              shouldThrow<ChipcooException.InvalidArgumentChipcooException> {
+              shouldThrow<ServiceException.InvalidArgumentServiceException> {
                 ensure(name.isNotEmpty() && age >= 18) { "Invalid person data" }
               }
           exception.message shouldBe "Invalid person data"

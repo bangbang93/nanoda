@@ -1,12 +1,12 @@
 package com.bangbang93.nanoda.spring.data.mongodb
 
 import com.bangbang93.nanoda.bson.toObjectIdList
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty1
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.inValues
 import org.springframework.data.mongodb.core.query.where
-import kotlin.reflect.KProperty
-import kotlin.reflect.KProperty1
 
 typealias BuildQueryField1<TSearch> = List<Pair<KProperty<*>, KProperty1<TSearch, Any?>>>
 

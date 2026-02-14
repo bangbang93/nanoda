@@ -1,15 +1,15 @@
 package com.bangbang93.nanoda.csv
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
+import java.io.InputStream
+import java.io.PipedInputStream
+import java.io.PipedOutputStream
+import java.nio.charset.Charset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.io.InputStream
-import java.io.PipedInputStream
-import java.io.PipedOutputStream
-import java.nio.charset.Charset
 
 @OptIn(ExperimentalStdlibApi::class)
 class CsvBuilder<T>(

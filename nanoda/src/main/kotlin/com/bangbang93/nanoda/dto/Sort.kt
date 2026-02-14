@@ -1,8 +1,8 @@
 package com.bangbang93.nanoda.dto
 
+import kotlin.reflect.KProperty
 import org.springframework.data.domain.Sort
 import org.springframework.data.mapping.toDotPath
-import kotlin.reflect.KProperty
 
 typealias SortParams = List<Pair<String, Int>>
 

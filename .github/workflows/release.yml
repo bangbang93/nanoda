@@ -29,13 +29,16 @@ jobs:
           cache: gradle
 
       - name: Build release
-        run: ./gradlew clean build -x test --no-daemon
+        run: ./gradlew clean build -x test
 
       - name: Run tests
-        run: ./gradlew test --no-daemon
+        run: ./gradlew test
 
       - name: Generate documentation
-        run: ./gradlew dokkaGenerate --no-daemon
+        run: ./gradlew dokkaGenerate
+
+      - name: Publish to Maven Central
+        run: ./gradlew jreleaserFullRelease
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

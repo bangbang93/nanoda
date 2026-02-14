@@ -44,19 +44,6 @@ class ServiceExceptionTest :
         }
       }
 
-      describe("WrongOrganizationException") {
-        it("创建异常时设置正确的属性") {
-          // Arrange & Act
-          val exception = ServiceException.WrongOrganizationServiceException("Wrong organization")
-
-          // Assert
-          exception.message shouldBe "Wrong organization"
-          exception.code shouldBe "COMMON_WRONG_ORGANIZATION"
-          exception.httpCode shouldBe 400
-          exception.`$isServiceError` shouldBe true
-        }
-      }
-
       describe("NotFoundServiceException") {
         it("创建异常时设置正确的属性") {
           // Arrange & Act
@@ -116,7 +103,6 @@ class ServiceExceptionTest :
               listOf(
                   ServiceException.UnknownServiceException("test"),
                   ServiceException.NeedLoginServiceException("test"),
-                  ServiceException.WrongOrganizationServiceException("test"),
                   ServiceException.NotFoundServiceException("test"),
                   ServiceException.PermissionDeniedServiceException("test"),
                   ServiceException.MissingArgumentServiceException("test"),

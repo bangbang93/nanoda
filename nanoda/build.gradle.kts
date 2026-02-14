@@ -1,12 +1,4 @@
-import com.github.sbaudoin.yamllint.Format.github
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.jreleaser
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.libs
-import org.gradle.kotlin.dsl.`maven-publish`
-import org.gradle.kotlin.dsl.publishing
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.internal.backend.common.serialization.metadata.DynamicTypeDeserializer.id
 import org.jreleaser.gradle.plugin.tasks.AbstractJReleaserTask
 import org.jreleaser.model.Active
 import org.jreleaser.model.Signing
@@ -25,7 +17,7 @@ plugins {
 
 group = "com.bangbang93.nanoda"
 
-version = "0.0.3"
+version = "0.0.4"
 
 dependencies {
   // 核心库

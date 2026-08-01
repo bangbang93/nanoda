@@ -79,6 +79,7 @@ jreleaser {
     github {
       overwrite = true
       uploadAssets = Active.ALWAYS
+      branch = "master"
     }
   }
   signing {

@@ -17,7 +17,7 @@ plugins {
 
 group = "com.bangbang93.nanoda"
 
-version = "0.0.4"
+version = "0.1.0"
 
 dependencies {
   // 核心库

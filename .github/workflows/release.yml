@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew dokkaGenerate
 
       - name: Publish to Maven Central
-        run: ./gradlew jreleaserFullRelease
+        run: ./gradlew publish jreleaserFullRelease
         env:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_TOKEN: ${{ secrets.JRELEASER_MAVENCENTRAL_TOKEN }}

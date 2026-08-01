@@ -110,3 +110,6 @@ hs_err_pid*
 replay_pid*
 
 !gradle/wrapper/gradle-wrapper.jar
+
+# opencode (OhMyOpenCode) tooling directory
+.omo/

@@ -4,16 +4,14 @@ package com.bangbang93.nanoda.protobuf
 
 import com.google.protobuf.Timestamp
 import com.google.protobuf.timestamp
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toInstant
-import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaLocalDateTime
-import kotlinx.datetime.toKotlinInstant
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toLocalDateTime
@@ -58,14 +56,19 @@ fun java.time.LocalDate.toProtobufTimestamp(): Timestamp =
 fun java.time.LocalDateTime.toProtobufTimestamp(): Timestamp =
     this.toKotlinLocalDateTime().toProtobufTimestamp()
 
-fun java.time.Instant.toProtobufTimestamp(): Timestamp =
-    this.toKotlinInstant().toProtobufTimestamp()
+fun java.time.Instant.toProtobufTimestamp(): Timestamp = timestamp {
+  seconds = epochSecond
+  nanos = nano
+}
 
 fun Timestamp.toJavaLocalDate(): java.time.LocalDate = this.toLocalDate().toJavaLocalDate()
 
 fun Timestamp.toJavaLocalDateTime(): java.time.LocalDateTime =
     this.toLocalDateTime().toJavaLocalDateTime()
 
-fun Timestamp.toJavaInstant(): java.time.Instant = this.toInstant().toJavaInstant()
+fun Timestamp.toJavaInstant(): java.time.Instant {
+  val instant = this.toInstant()
+  return java.time.Instant.ofEpochSecond(instant.epochSeconds, instant.nanosecondsOfSecond.toLong())
+}
 
 fun Timestamp.toJavaDate(): java.util.Date = java.util.Date.from(this.toJavaInstant())

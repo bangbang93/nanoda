@@ -3,7 +3,7 @@
 dokka = '2.0.0'
 kotlin = '2.4.10'
 kotlinCsv = '1.10.0'
-kover = '0.9.1'
+kover = '0.9.9'
 ktfmt = "0.25.0"
 detekt = "2.0.0-alpha.2"
 jreleaser = "1.22.0"

@@ -20,6 +20,7 @@ spring-data-mongodb = "4.4.0"
 reactor-core = '3.8.0'
 mockk = '1.14.6'
 mongodb = '5.6.1'
+sonarqube = "7.5.0.8588"
 temporal = "1.31.0"
 
 [libraries]
@@ -74,4 +75,5 @@ kotest = { id = "io.kotest", version.ref = "kotest" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 versions = { id = "com.github.ben-manes.versions", version = "0.52.0" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }

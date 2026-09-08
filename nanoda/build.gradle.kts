@@ -10,6 +10,7 @@ plugins {
   alias(libs.plugins.kover)
   alias(libs.plugins.kotest)
   alias(libs.plugins.ktfmt)
+  alias(libs.plugins.sonarqube)
   alias(libs.plugins.jreleaser)
   `maven-publish`
 }
@@ -70,6 +71,17 @@ java {
 kotlin {
   jvmToolchain(21)
   compilerOptions { jvmTarget = JvmTarget.JVM_17 }
+}
+
+sonar {
+  properties {
+    property("sonar.projectKey", "bangbang93_nanoda")
+    property("sonar.organization", "bangbang93")
+    property(
+      "sonar.coverage.jacoco.xmlReportPaths",
+      layout.buildDirectory.file("reports/kover/report.xml").get().asFile.absolutePath
+    )
+  }
 }
 
 jreleaser {

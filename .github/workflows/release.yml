@@ -26,12 +26,14 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
-          cache: gradle
           server-id: central
           server-username: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
           server-password: ${{ secrets.JRELEASER_MAVENCENTRAL_PASSWORD }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Build release
         run: ./gradlew clean build -x test

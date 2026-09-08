@@ -78,9 +78,8 @@ sonar {
     property("sonar.projectKey", "bangbang93_nanoda")
     property("sonar.organization", "bangbang93")
     property(
-      "sonar.coverage.jacoco.xmlReportPaths",
-      layout.buildDirectory.file("reports/kover/report.xml").get().asFile.absolutePath
-    )
+        "sonar.coverage.jacoco.xmlReportPaths",
+        layout.buildDirectory.file("reports/kover/report.xml").get().asFile.absolutePath)
   }
 }
 

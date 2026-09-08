@@ -21,8 +21,10 @@ fun parseSort(
           else -> trimmed to 1
         }
       }
-  return if (fieldAllowList == null) sorts
-  else sorts.filter { (field, _) -> fieldAllowList.contains(field) }
+  if (fieldAllowList != null) {
+    return sorts.filter { (field, _) -> fieldAllowList.contains(field) }
+  }
+  return sorts
 }
 
 @JvmName("parseSortKProperty")

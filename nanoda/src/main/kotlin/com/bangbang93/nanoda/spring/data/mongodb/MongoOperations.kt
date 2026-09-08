@@ -15,8 +15,6 @@ suspend inline fun <reified T> MongoOperations.findAndCount(
 ): PagedResDto<T> = coroutineScope {
   val count = async { count(query, T::class.java) }
   query.with(parseSortSpring(sort))
-  val data = async {
-    query(T::class.java).matching(query.skip(skip.toLong()).limit(limit)).all()
-  }
+  val data = async { query(T::class.java).matching(query.skip(skip.toLong()).limit(limit)).all() }
   PagedResDto(data.await(), count.await().toInt())
 }

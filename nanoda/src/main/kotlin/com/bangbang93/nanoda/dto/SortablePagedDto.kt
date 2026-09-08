@@ -8,6 +8,6 @@ open class SortablePagedDto(
 ) : ISortablePagedDto
 
 interface ISortablePagedDto : IPagedDto {
-    /** 排序字段 例： +createdAt,"+-"代表正序倒序 */
-    val sort: String?
+  /** 排序字段 例： +createdAt,"+-"代表正序倒序 */
+  val sort: String?
 }

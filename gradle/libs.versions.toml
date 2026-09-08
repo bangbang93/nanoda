@@ -5,7 +5,6 @@ kotlin = '2.4.10'
 kotlinCsv = '1.10.0'
 kover = '0.9.9'
 ktfmt = "0.25.0"
-detekt = "2.0.0-alpha.2"
 jreleaser = "1.22.0"
 
 #libs
@@ -75,5 +74,4 @@ kotest = { id = "io.kotest", version.ref = "kotest" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 versions = { id = "com.github.ben-manes.versions", version = "0.52.0" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
-detekt = { id = "dev.detekt", version.ref = "detekt" }
 jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }

@@ -10,7 +10,6 @@ plugins {
   alias(libs.plugins.kover)
   alias(libs.plugins.kotest)
   alias(libs.plugins.ktfmt)
-  alias(libs.plugins.detekt)
   alias(libs.plugins.jreleaser)
   `maven-publish`
 }

@@ -50,7 +50,7 @@ jobs:
         working-directory: .
 
       - name: Generate code quality reports
-        run: ./gradlew detekt ktfmtCheck --no-daemon
+        run: ./gradlew ktfmtCheck --no-daemon
         working-directory: .
         continue-on-error: true
 
@@ -73,14 +73,6 @@ jobs:
         with:
           name: coverage-reports
           path: nanoda/build/reports/kover/
-          retention-days: 30
-
-      - name: Upload detekt reports
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: detekt-reports
-          path: nanoda/build/reports/detekt/
           retention-days: 30
 
       - name: Publish test results

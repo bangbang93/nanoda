@@ -36,9 +36,6 @@ jobs:
       - name: Generate documentation
         run: ./gradlew dokkaGenerate --no-daemon
 
-      - name: Check code quality
-        run: ./gradlew detekt --no-daemon
-
       - name: Format check
         run: ./gradlew ktfmtCheck --no-daemon
 

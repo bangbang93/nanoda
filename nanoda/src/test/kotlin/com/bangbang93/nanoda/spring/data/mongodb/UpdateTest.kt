@@ -3,6 +3,7 @@ package com.bangbang93.nanoda.spring.data.mongodb
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import org.bson.Document
+import org.springframework.data.mongodb.core.query.Update
 
 class UpdateTest :
     DescribeSpec({
@@ -102,8 +103,12 @@ class UpdateTest :
           it("批量追加") {
             val u = update { User::tags.pushEach("a", "b") }
 
-            ((u.updateObject["\$push"] as Document)["tags"] as Document)["\$each"] shouldBe
-                listOf("a", "b")
+            val each =
+                ((u.updateObject["\$push"] as Document)["tags"] as Update.Modifiers)
+                    .modifiers
+                    .single()
+            each.key shouldBe "\$each"
+            (each.value as Array<*>).toList() shouldBe listOf("a", "b")
           }
         }
 
@@ -112,6 +117,14 @@ class UpdateTest :
             val u = update { User::tags addToSet "admin" }
 
             (u.updateObject["\$addToSet"] as Document)["tags"] shouldBe "admin"
+          }
+
+          it("批量去重添加") {
+            val u = update { "tags".addToSetEach("a", "b") }
+
+            val each = (u.updateObject["\$addToSet"] as Document)["tags"] as Update.Modifier
+            each.key shouldBe "\$each"
+            (each.value as Array<*>).toList() shouldBe listOf("a", "b")
           }
         }
 

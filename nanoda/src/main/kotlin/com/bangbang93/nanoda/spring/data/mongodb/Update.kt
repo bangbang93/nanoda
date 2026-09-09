@@ -1,7 +1,6 @@
 package com.bangbang93.nanoda.spring.data.mongodb
 
 import kotlin.reflect.KProperty
-import org.bson.Document
 import org.springframework.data.mapping.toDotPath
 import org.springframework.data.mongodb.core.query.Update
 import org.springframework.data.mongodb.core.query.Update.Position
@@ -108,12 +107,12 @@ class UpdateScope {
 
   /** $push $each 批量追加 */
   fun String.pushEach(vararg values: Any?) {
-    update.push(this, Document("\$each", values.toList()))
+    update.push(this).each(*values)
   }
 
   /** $push $each 批量追加 */
   fun KProperty<*>.pushEach(vararg values: Any?) {
-    update.push(this.toDotPath(), Document("\$each", values.toList()))
+    update.push(this.toDotPath()).each(*values)
   }
 
   /** $addToSet 元素不存在时才添加 */
@@ -124,6 +123,16 @@ class UpdateScope {
   /** $addToSet 元素不存在时才添加 */
   infix fun KProperty<*>.addToSet(value: Any?) {
     update.addToSet(this.toDotPath(), value)
+  }
+
+  /** $addToSet $each 批量去重添加 */
+  fun String.addToSetEach(vararg values: Any?) {
+    update.addToSet(this).each(*values)
+  }
+
+  /** $addToSet $each 批量去重添加 */
+  fun KProperty<*>.addToSetEach(vararg values: Any?) {
+    update.addToSet(this.toDotPath()).each(*values)
   }
 
   /** $pull 移除匹配的元素 */

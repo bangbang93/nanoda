@@ -106,6 +106,16 @@ class UpdateScope {
   }
 
   /** $push $each 批量追加 */
+  infix fun String.push(values: EachValues) {
+    update.push(this).each(*values.values)
+  }
+
+  /** $push $each 批量追加 */
+  infix fun KProperty<*>.push(values: EachValues) {
+    update.push(this.toDotPath()).each(*values.values)
+  }
+
+  /** $push $each 批量追加 */
   fun String.pushEach(vararg values: Any?) {
     update.push(this).each(*values)
   }
@@ -123,6 +133,16 @@ class UpdateScope {
   /** $addToSet 元素不存在时才添加 */
   infix fun KProperty<*>.addToSet(value: Any?) {
     update.addToSet(this.toDotPath(), value)
+  }
+
+  /** $addToSet $each 批量去重添加 */
+  infix fun String.addToSet(values: EachValues) {
+    update.addToSet(this).each(*values.values)
+  }
+
+  /** $addToSet $each 批量去重添加 */
+  infix fun KProperty<*>.addToSet(values: EachValues) {
+    update.addToSet(this.toDotPath()).each(*values.values)
   }
 
   /** $addToSet $each 批量去重添加 */
@@ -235,6 +255,21 @@ class UpdateScope {
  * @param u 更新构建 lambda
  * @return 配置好的 [Update]
  */
+/**
+ * $each 批量值标记，供 [UpdateScope] 的 addToSet/push infix 重载使用。
+ *
+ * @see each
+ */
+class EachValues internal constructor(internal val values: Array<out Any?>)
+
+/**
+ * 构造 $each 批量值：`User::tags addToSet each("a", "b")`、`User::tags push each("a", "b")`。
+ *
+ * @param values 批量值
+ * @return [EachValues] 标记
+ */
+fun each(vararg values: Any?): EachValues = EachValues(values)
+
 fun update(u: UpdateScope.() -> Unit): Update {
   val scope = UpdateScope()
   scope.u()

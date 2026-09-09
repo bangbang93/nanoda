@@ -110,6 +110,17 @@ class UpdateTest :
             each.key shouldBe "\$each"
             (each.value as Array<*>).toList() shouldBe listOf("a", "b")
           }
+
+          it("each 标记批量追加") {
+            val u = update { "tags" push each("a", "b") }
+
+            val each =
+                ((u.updateObject["\$push"] as Document)["tags"] as Update.Modifiers)
+                    .modifiers
+                    .single()
+            each.key shouldBe "\$each"
+            (each.value as Array<*>).toList() shouldBe listOf("a", "b")
+          }
         }
 
         describe("addToSet") {
@@ -121,6 +132,14 @@ class UpdateTest :
 
           it("批量去重添加") {
             val u = update { "tags".addToSetEach("a", "b") }
+
+            val each = (u.updateObject["\$addToSet"] as Document)["tags"] as Update.Modifier
+            each.key shouldBe "\$each"
+            (each.value as Array<*>).toList() shouldBe listOf("a", "b")
+          }
+
+          it("each 标记批量去重添加") {
+            val u = update { User::tags addToSet each("a", "b") }
 
             val each = (u.updateObject["\$addToSet"] as Document)["tags"] as Update.Modifier
             each.key shouldBe "\$each"
